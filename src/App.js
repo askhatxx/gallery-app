@@ -1,17 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import Header from './components/Header';
-import ImageBox from './components/ImageBox';
+import FoundImages from './components/FoundImages';
+import LikesImages from './components/LikesImages';
 import useScrollBottom from './useScrollBottom';
+import useLocalStorage from './useLocalStorage';
 
 function App() {
   const [result, setResult] = useState([]);
   const [query, setQuery] = useState('art');
   const [page, setPage] = useState(1);
+  const [showLikes, setShowLikes] = useState(false);
   const [onBottom, setOnBottom] = useScrollBottom();
+  const [likes, toogleLike] = useLocalStorage();
 
   useEffect(() => {
     console.log(query);
     setPage(1);
+    setShowLikes(false);
     fetchImagesApi(query, 1);
   }, [query]);
 
@@ -53,17 +58,15 @@ function App() {
   return (
     <div>
       <div className='head'>
-        <Header setQuery={setQuery} />
+        <Header setQuery={setQuery} showLikes={showLikes} setShowLikes={setShowLikes} />
       </div>
       <div className='container'>
         <div className='gallery'>
-          {result.length === 0 ? (
-            <div>0</div>
-          ) : (
-            result.map((item) => {
-              return <ImageBox key={item.id} image={item} />
-            })
-          )}
+          {
+            showLikes 
+              ? <LikesImages likes={likes} toogleLike={toogleLike} />
+              : <FoundImages result={result} likes={likes} toogleLike={toogleLike} />
+          }
         </div>
       </div>
     </div>
