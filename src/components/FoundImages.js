@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageBox from './ImageBox';
 
-const FoundImages = ({result, likes, toogleLike}) => {
+const FoundImages = ({result, likes, toogleLike, showModal}) => {
   return (
     <>
       {
@@ -10,7 +10,7 @@ const FoundImages = ({result, likes, toogleLike}) => {
         ) : (
           result.map((item) => {
             const isLike = likes.findIndex(like => like.id === item.id) >= 0;
-            return <ImageBox key={item.id} image={item} toogleLike={toogleLike} isLike={isLike} />
+            return <ImageBox key={item.id} image={item} toogleLike={toogleLike} isLike={isLike} showModal={showModal} />
           })
         )
       }

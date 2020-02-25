@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Header from './components/Header';
 import FoundImages from './components/FoundImages';
 import LikesImages from './components/LikesImages';
+import ModalImage from './components/ModalImage';
 import useScrollBottom from './useScrollBottom';
 import useLocalStorage from './useLocalStorage';
 
@@ -10,6 +11,7 @@ function App() {
   const [query, setQuery] = useState('art');
   const [page, setPage] = useState(1);
   const [showLikes, setShowLikes] = useState(false);
+  const [isModal, setIsModal] = useState(null);
   const [onBottom, setOnBottom] = useScrollBottom();
   const [likes, toogleLike] = useLocalStorage();
 
@@ -35,6 +37,10 @@ function App() {
     console.log('FIRST', page);
     fetchImagesApi(query, page);
   }, []);
+
+  const showModal = (image) => {
+    setIsModal(image);
+  }
 
   const fetchImagesApi = (query, page) => {
     const key = process.env.REACT_APP_CLIENT_ID;
@@ -64,11 +70,12 @@ function App() {
         <div className='gallery'>
           {
             showLikes 
-              ? <LikesImages likes={likes} toogleLike={toogleLike} />
-              : <FoundImages result={result} likes={likes} toogleLike={toogleLike} />
+              ? <LikesImages likes={likes} toogleLike={toogleLike} showModal={showModal} />
+              : <FoundImages result={result} likes={likes} toogleLike={toogleLike} showModal={showModal} />
           }
         </div>
       </div>
+      {isModal && <ModalImage image={isModal} closeModal={setIsModal} />}
     </div>
   );
 }
