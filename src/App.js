@@ -75,7 +75,7 @@ function App() {
           }
         </div>
       </div>
-      {isModal && <ModalImage image={isModal} closeModal={setIsModal} />}
+      {isModal && <ModalImage image={isModal} closeModal={setIsModal} likes={likes} toogleLike={toogleLike} />}
     </div>
   );
 }

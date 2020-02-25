@@ -6,7 +6,7 @@ const FoundImages = ({result, likes, toogleLike, showModal}) => {
     <>
       {
         result.length === 0 ? (
-          <div>0</div>
+          <div className='no-results'>No results</div>
         ) : (
           result.map((item) => {
             const isLike = likes.findIndex(like => like.id === item.id) >= 0;
