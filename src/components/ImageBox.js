@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ImageBox = ({image, toogleLike, isLike, showModal}) => {
+const ImageBox = ({image, toggleLike, isLike, showModal}) => {
   const likeClick = () => {
-    toogleLike(image);
+    toggleLike(image);
   }
 
   const imageClick = () => {
@@ -16,7 +16,7 @@ const ImageBox = ({image, toogleLike, isLike, showModal}) => {
   return (
     <div className='gallery-block'>
       <img src={image.urls.small} alt={image.alt_description} onClick={imageClick}/>
-      <div className={classLike()} onClick={likeClick}></div>
+      <div className={classLike()} onClick={likeClick}>❤</div>
     </div>
   );
 }

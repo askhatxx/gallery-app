@@ -23,7 +23,7 @@ const Header = ({setQuery, showLikes, setShowLikes}) => {
   
   return (
     <header className='container header'>
-      <div className='logo' onClick={clickLogo}>Gallery App</div>
+      <div className='logo' onClick={clickLogo}>Gallery <span>App</span></div>
       <div className='search'>
         <input 
           className='search-input'

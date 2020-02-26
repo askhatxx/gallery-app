@@ -3,6 +3,7 @@ import Header from './components/Header';
 import FoundImages from './components/FoundImages';
 import LikesImages from './components/LikesImages';
 import ModalImage from './components/ModalImage';
+import Loading from './components/Loading';
 import useScrollBottom from './useScrollBottom';
 import useLocalStorage from './useLocalStorage';
 
@@ -12,8 +13,9 @@ function App() {
   const [page, setPage] = useState(1);
   const [showLikes, setShowLikes] = useState(false);
   const [isModal, setIsModal] = useState(null);
+  const [isFetching, setIsFetching] = useState(false);
   const [onBottom, setOnBottom] = useScrollBottom();
-  const [likes, toogleLike] = useLocalStorage();
+  const [likes, toggleLike] = useLocalStorage();
 
   useEffect(() => {
     console.log(query);
@@ -44,17 +46,19 @@ function App() {
 
   const fetchImagesApi = (query, page) => {
     const key = process.env.REACT_APP_CLIENT_ID;
-    
+    setIsFetching(true);
     fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${query}&per_page=12&client_id=${key}`)
       .then(response => response.json())
       .then(result => {
         console.log(result);
         if (result.total === 0) {
           setResult([]);
+          setIsFetching(false);
         }
         else if (page <= result.total_pages) {
           if (page === 1) setResult([...result.results]);
           else setResult(prev => [...prev, ...result.results]);
+          setIsFetching(false);
           setOnBottom(false);
         }
       })
@@ -70,12 +74,13 @@ function App() {
         <div className='gallery'>
           {
             showLikes 
-              ? <LikesImages likes={likes} toogleLike={toogleLike} showModal={showModal} />
-              : <FoundImages result={result} likes={likes} toogleLike={toogleLike} showModal={showModal} />
+              ? <LikesImages likes={likes} toggleLike={toggleLike} showModal={showModal} />
+              : <FoundImages result={result} likes={likes} toggleLike={toggleLike} showModal={showModal} isFetching={isFetching} />
           }
         </div>
       </div>
-      {isModal && <ModalImage image={isModal} closeModal={setIsModal} likes={likes} toogleLike={toogleLike} />}
+      {isFetching && <Loading/>}
+      {isModal && <ModalImage image={isModal} closeModal={setIsModal} likes={likes} toggleLike={toggleLike} />}
     </div>
   );
 }
