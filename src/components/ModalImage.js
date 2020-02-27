@@ -2,7 +2,6 @@ import React, {useState , useEffect, useRef} from 'react';
 import Loading from './Loading';
 
 const ModalImage = ({image, closeModal, likes, toggleLike}) => {
-  console.log('ModalImage------', image);
   const [zoom, setZoom] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const modalRef = useRef(null);
@@ -53,7 +52,7 @@ const ModalImage = ({image, closeModal, likes, toggleLike}) => {
     <div className='modal show' ref={modalRef} onClick={clickUnderModal}>
       <div className='modal-box'>
         <div className='modal-top'>
-          <div className={classLike()} onClick={likeClick}>❤</div>
+          <div className={classLike()} onClick={likeClick}>♥</div>
           <button className='btn-close' onClick={clickClose}>×</button>
         </div>
         <div className={getClassesImg()}>

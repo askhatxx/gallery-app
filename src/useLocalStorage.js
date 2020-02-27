@@ -19,7 +19,6 @@ const useLocalStorage = () => {
   }
 
   useEffect(() => {
-    console.log('LIKES', likes);
     localStorage.setItem('likes', JSON.stringify(likes));
   }, [likes]);
 

@@ -4,8 +4,7 @@ const useScrollBottom = () => {
   const [onBottom, setOnBottom] = useState(false);
 
   const onBottomCheck = () => {
-    if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight - 50 && !onBottom) {
-      console.log('ooooooooooooo', onBottom);
+    if (document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight - 100 && !onBottom) {
       setOnBottom(true);
     }
   }

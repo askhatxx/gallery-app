@@ -16,7 +16,7 @@ const ImageBox = ({image, toggleLike, isLike, showModal}) => {
   return (
     <div className='gallery-block'>
       <img src={image.urls.small} alt={image.alt_description} onClick={imageClick}/>
-      <div className={classLike()} onClick={likeClick}>❤</div>
+      <div className={classLike()} onClick={likeClick}>♥</div>
     </div>
   );
 }

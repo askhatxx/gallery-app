@@ -143,7 +143,7 @@ body {
 
 .gallery-like {
   color: #000;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 22px;
   width: 20px;
   height: 20px;
@@ -193,7 +193,7 @@ body {
   left: 0;
   right: 0;
   background: rgba(0, 0, 0, .5);
-  overflow: auto;
+  overflow-y: scroll;
 }
 
 .modal.show {
@@ -207,11 +207,12 @@ body {
   margin: 4vh;
   background: #fff;
   border-radius: 10px;
+  min-height: 250px;
 }
 
 .modal .modal-top {
   text-align: right;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -220,7 +221,8 @@ body {
 .modal .modal-top .gallery-like {
   display: inline-block;
   margin-right: 15px;
-  font-size: 20px;
+  font-size: 1.5rem;
+  line-height: 1.6rem;
 }
 
 .btn-close {
@@ -319,7 +321,7 @@ body {
   border: 8px solid #fff;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #999 transparent transparent transparent;
+  border-color: #444 transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {

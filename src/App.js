@@ -18,7 +18,6 @@ function App() {
   const [likes, toggleLike] = useLocalStorage();
 
   useEffect(() => {
-    console.log(query);
     setPage(1);
     setShowLikes(false);
     fetchImagesApi(query, 1);
@@ -26,17 +25,16 @@ function App() {
 
   useEffect(() => {
     if (onBottom) {
-      setPage(prev => prev + 1);
+      if (!showLikes) setPage(prev => prev + 1);
+      else setOnBottom(false);
     }
   }, [onBottom]);
 
   useEffect(() => {
-    console.log('page', page);
     if (page !== 1) fetchImagesApi(query, page);
   }, [page]);
 
   useEffect(() => {
-    console.log('FIRST', page);
     fetchImagesApi(query, page);
   }, []);
 
@@ -47,22 +45,22 @@ function App() {
   const fetchImagesApi = (query, page) => {
     const key = process.env.REACT_APP_CLIENT_ID;
     setIsFetching(true);
-    fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${query}&per_page=12&client_id=${key}`)
+    fetch(`https://api.unsplash.com/search/photos?page=${page}&query=${query}&per_page=24&client_id=${key}`)
       .then(response => response.json())
       .then(result => {
-        console.log(result);
         if (result.total === 0) {
           setResult([]);
-          setIsFetching(false);
         }
         else if (page <= result.total_pages) {
           if (page === 1) setResult([...result.results]);
           else setResult(prev => [...prev, ...result.results]);
-          setIsFetching(false);
-          setOnBottom(false);
         }
       })
-      .catch(err => console.log('Error fetch', err));
+      .catch(err => console.log('Error fetch', err))
+      .finally(() => {
+        setIsFetching(false);
+        setOnBottom(false);
+      });
   }
 
   return (
@@ -78,8 +76,8 @@ function App() {
               : <FoundImages result={result} likes={likes} toggleLike={toggleLike} showModal={showModal} isFetching={isFetching} />
           }
         </div>
+        {isFetching && <Loading/>}
       </div>
-      {isFetching && <Loading/>}
       {isModal && <ModalImage image={isModal} closeModal={setIsModal} likes={likes} toggleLike={toggleLike} />}
     </div>
   );
